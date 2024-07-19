@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced PDF Editor</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+</head>
+<body>
+    <div id="toolbar">
+        <input type="file" id="file-input" accept="application/pdf">
+        <button id="highlight-tool">Highlight</button>
+        <button id="pen-tool">Draw</button>
+        <button id="eraser-tool">Eraser</button>
+        <input type="color" id="color-picker" value="#ffff00">
+        <input type="range" id="pen-size" min="1" max="20" value="5">
+    </div>
+    <div id="pdf-container"></div>
+    <script src="script.js"></script>
+</body>
+</html>
