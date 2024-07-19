@@ -6,6 +6,8 @@
     <title>Advanced PDF Editor</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
 </head>
 <body>
     <div id="toolbar">
@@ -15,9 +17,14 @@
         <button id="eraser-tool">Eraser</button>
         <input type="color" id="color-picker" value="#ffff00">
         <input type="range" id="pen-size" min="1" max="20" value="5">
-        <button id="save-btn">Save</button>
+        <div class="save-btn-container">
+            <button id="save-btn">Save</button>
+        </div>
+    </div>
+
     </div>
     <div id="pdf-container"></div>
     <script src="script.js"></script>
+    <script src="save.js"></script>
 </body>
 </html>
