@@ -17,6 +17,8 @@ function renderPage(pageNum) {
         canvas.height = viewport.height;
         canvas.width = viewport.width;
 
+        /*Prepares the rendering context object with 
+        the canvas context and viewport.*/
         let renderContext = {
             canvasContext: context,
             viewport: viewport
@@ -85,16 +87,19 @@ let highlightStart = null;
 let highlightElement = null;
 
 function startHighlight(e, pageNum) {
-    highlightStart = {x: e.offsetX, y: e.offsetY}; //seting the coordinates
+    highlightStart = {x: e.offsetX, y: e.offsetY}; //seting the coordinates of mouse click point
     highlightElement = document.createElement('div');
     highlightElement.className = 'highlight';
     highlightElement.style.position = 'absolute';
     highlightElement.style.left = highlightStart.x + 'px';
     highlightElement.style.top = highlightStart.y + 'px';
     highlightElement.style.backgroundColor = document.getElementById('color-picker').value + '50';
+    //is appended to closest element
     e.target.closest('.pdf-page').appendChild(highlightElement);
 }
 
+/*dynamically adjusts the size and position 
+of a highlight element*/
 function duringHighlight(e, pageNum) {
     if (highlightStart) {
         let width = e.offsetX - highlightStart.x;
@@ -112,11 +117,11 @@ function endHighlight(e, pageNum) {
 
 function startDrawing(e, pageNum) {
     isDrawing = true;
-    [lastX, lastY] = [e.offsetX, e.offsetY];
+    [lastX, lastY] = [e.offsetX, e.offsetY];    //storing X and Y coordinates of mouse
 }
 
 function duringDrawing(e, pageNum) {
-    if (!isDrawing) return;
+    if (!isDrawing) return;  //false vako true vayo vane fale --> !false --> true
     let drawingCanvas = document.getElementById('drawing-canvas-' + pageNum);
     if (!drawingCanvas) {
         console.error('Drawing canvas not found for page', pageNum);
@@ -154,8 +159,10 @@ function endErasing(e, pageNum) {
 
 function eraseAt(e, pageNum) {
     let pageDiv = e.target.closest('.pdf-page');
-    let eraserSize = 20; // default eraser size
+    //let eraserSize = 20; // default eraser size
+    let eraserSize = document.getElementById('pen-size').value;
 
+    //pdf ma over lap (highlight) va xa vane removes highlighted element remove hunxa
     let highlights = pageDiv.querySelectorAll('.highlight');
     highlights.forEach(highlight => {
         let rect = highlight.getBoundingClientRect();
@@ -177,6 +184,7 @@ function eraseAt(e, pageNum) {
     }
 }
 
+//handeling input pdf
 document.getElementById('file-input').addEventListener('change', function(e) {
     let file = e.target.files[0];
     if (file.type !== 'application/pdf') {
@@ -201,17 +209,14 @@ document.getElementById('file-input').addEventListener('change', function(e) {
 
 document.getElementById('highlight-tool').addEventListener('click', function() {
     currentTool = 'highlight';
-    console.log('Highlight tool selected');
 });
 
 document.getElementById('pen-tool').addEventListener('click', function() {
     currentTool = 'pen';
-    console.log('Pen tool selected');
 });
 
 document.getElementById('eraser-tool').addEventListener('click', function() {
     currentTool = 'eraser';
-    console.log('Eraser tool selected');
 });
 
 
